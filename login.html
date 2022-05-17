@@ -6,10 +6,68 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/assets/fonts/iconfont.css">
+    <link rel="stylesheet" href="/assets/css/login.css">
 </head>
 
 <body>
+    <!-- logo区域 -->
+    <div class="logo">
+        <img src="/assets/images/logo.png" alt="">
+    </div>
+    <!-- 后台管理区域 -->
+    <div class="loginAndbox">
+        <div class="title-box"></div>
+        <!-- 登录 -->
+        <div class="login-box">
+            <form id="form_login">
+                <div class="div-row">
+                    <i class="iconfont icon-yonghu-yuan"></i>
+                    <input type="text" placeholder="请输入用户名" class="inp_user">
 
+                </div>
+                <div class="div-row">
+                    <i class="iconfont icon-suoding"></i>
+                    <input type="password" placeholder="请输入密码" class="inp_pword">
+
+                </div>
+                <button class="btn" type="submit">登录</button>
+                <div class="div-row">
+                    <a href="javascript:;" id="reg">去注册账号</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- 注册 -->
+        <div class="reg-box">
+            <form id="form_reg">
+                <div class="div-row">
+                    <i class="iconfont icon-yonghu-yuan"></i>
+                    <input name="username" placeholder="请输入用户名" class="inp_user">
+
+                </div>
+                <div class="div-row">
+                    <i class="iconfont icon-suoding"></i>
+                    <input name="password" type="password" placeholder="请输入密码" class="inp_pword">
+
+                </div>
+                <div class="div-row">
+                    <i class="iconfont icon-suoding"></i>
+                    <input type="password" placeholder="请再次输入密码" class="inp_pword">
+
+                </div>
+                <button class="btn">注册</button>
+                <div class="div-row">
+                    <a href="javascript:;" id="login">去登录</a>
+                </div>
+            </form>
+        </div>
+
+        <span class="tip"></span>
+    </div>
+    <script src="/assets/lib/jquery.js"></script>
+    <script src="/assets/js/baseApi.js"></script>
+    <script src="/assets/js/login.js"></script>
 </body>
 
 </html>
