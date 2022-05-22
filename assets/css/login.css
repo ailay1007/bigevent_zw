@@ -37,55 +37,25 @@ html,body{
 .reg-box {
     display: none;
 }
-.div-row{
-    position: relative;
-    margin-bottom: 14px;
+.loginAndbox .btn {
+    border: 0px;
+    border-radius: 5px;
+    height: 40px;
+    background-color: #3fa9ff;
+    color:#fff;
 }
-
-.inp_user,.inp_pword {
-    border: #e6e6e6 1px solid;
-    padding-left: 30px;
-    width: 100%;
-    height: 36px;
-
-}
-.iconfont{
-    position: absolute;
-    left: 10px;
-    top: 12px;
-}
-
-.loginAndbox .btn{
-    display: block;
-    border: 0;
-    margin-bottom: 14px;
-    width: 100%;
-    height: 34px;
-    background-color: #1e9fff;
-    color: #ffffff;
-}
-.login-box .div-row:last-child,.reg-box .div-row:last-child {
+.loginAndbox a {
     display: flex;
     justify-content: flex-end;
 }
-.div-row a {
-    font-size: 12px;
-}
-
-/*给提示信息的span元素设置悬浮框样式 */
-.loginAndbox .tip {
+.loginAndbox .layui-form-item{
+    position: relative;
+} 
+.layui-form-item .layui-icon{
     position: absolute;
-    display: block;
-    display: none;
-    border: 1px solid gray;
-    left:50%;
-    top:  50%;
-    transform: translate(-50%,-50%);
-    width: 200px;
-    height: 45px;
-    background-color: #ffffff;
-    line-height: 45px;
-    font-size: 12px;
-    text-align: center;
-    color: red;
+    left: 10px;
+    top: 10px;
+}
+.layui-form-item .layui-input{
+    padding-left: 30px;
 }

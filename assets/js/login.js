@@ -1,95 +1,68 @@
-//点击去注册账号，切换到注册页面
-$('#reg').on('click', () => {
-    $('.loginAndbox .reg-box').show()
-    $('.loginAndbox .login-box').hide()
+// 实现注册和登录的切换
+$('.login-box a').click(() => {
+    $('.login-box').hide()
+    $('.reg-box').show()
 })
-//点击去登录，切换到登录页面
-$('#login').on('click', () => {
-    $('.loginAndbox .reg-box').hide()
-    $('.loginAndbox .login-box').show()
+$('.reg-box a').click(() => {
+    $('.reg-box').hide()
+    $('.login-box').show()
 })
-//表单正则验证
-let span = document.querySelector('.loginAndbox .tip')
-//登陆页面
-let inps = document.querySelectorAll('.login-box input')
-inps[0].addEventListener('change', verifyUname)
-function verifyUname() {
-    if (!/^[a-zA-Z0-9-_]{6,10}$/.test(inps[0].value)) {
-        span.style.display = 'block'
-        span.innerHTML = '用户名为6-10位数字或字母'
-        return false
-    }
-    span.style.display = 'none'
-    span.innerHTML = ''
-    return true
-}
-inps[1].addEventListener('change', verifyPwd)
-function verifyPwd() {
-    if (!/^[\S]{6,12}$/.test(inps[1].value)) {
-        span.style.display = 'block'
-        span.innerHTML = '密码必须6-12位，且不能有空格'
-        return false
-    }
-    span.style.display = 'none'
-    span.innerHTML = ''
-    return true
-}
-let btns = document.querySelectorAll('.loginAndbox .btn')
-btns[0].addEventListener('click', function (e) {
-    if (!verifyUname() || !verifyPwd()) {
-        e.preventDefault()
-        span.style.display = 'block'
-        return span.innerHTML = '必填项格式错误'
-    }
-})
-// 注册页面
-let inpts = document.querySelectorAll('.reg-box input')
-inpts[0].addEventListener('change', verifyUname1)
-function verifyUname1() {
-    if (!/^[a-zA-Z0-9-_]{6,10}$/.test(inpts[0].value)) {
-        span.style.display = 'block'
-        span.innerHTML = '用户名为6-10位数字或字母'
-        return false
-    }
-    span.style.display = 'none'
-    span.innerHTML = ''
-    return true
-}
-inpts[1].addEventListener('change', verifyPwd1)
-function verifyPwd1() {
-    if (!/^[\S]{6,12}$/.test(inpts[1].value)) {
-        span.style.display = 'block'
-        span.innerHTML = '密码必须6-12位，且不能有空格'
-        return false
-    }
-    span.style.display = 'none'
-    span.innerHTML = ''
-    return true
-}
-inpts[2].addEventListener('change', verifyPwdAgain)
-function verifyPwdAgain() {
-    if (inpts[2].value !== inpts[1].value) {
-        span.style.display = 'block'
-        span.innerHTML = '两次输入的密码不一致'
-        return false
-    }
-    span.style.display = 'none'
-    span.innerHTML = ''
-    return true
-}
+// 当导入layui.js后，就会有一个layui对象
+// 调用它的form.verify对象，可进行正则校验
+let form = layui.form
 
+form.verify({
+    //自定义密码的校验规则
+    pwd: [/^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格'],
+    // 自定义两次密码是否一致的校验规则
+    //value为表单的值
+    repwd: function (value) {
+        let pwd = $('.reg-box [name=password]').val();
+        if (pwd !== value) {
+            return '两次密码不一致'
+        }
+    }
+})
+
+//调注册的接口
 $('#form_reg').on('submit', function (e) {
     e.preventDefault()
-    if (!verifyUname1() || !verifyPwd1() || !verifyPwdAgain()) {
-        span.style.display = 'block'
-        return span.innerHTML = '必填项格式错误'
+    let data = {
+        username: $('#form_reg [name=username]').val(),
+        password: $('#form_reg [name=password]').val()
     }
-    $.post('/api/reguser',
-        {
-            username: $('#form_reg [name = username]').val(), password: $('#form_reg [name = password]').val()
-        }, function (req, res) {
-            if (res.status !== 0) return console.log(res.message)
-            console.log('注册成功')
-        })
+    $.post('/api/reguser', data, function (res) {
+        //获取layer对象
+        let layer = layui.layer
+        if (res.status !== 0) {
+            return layer.msg(res.message);
+        }
+        layer.msg('注册成功，请登录')
+        //模拟人的点击行为，跳转到登录页面
+        $('.reg-box a').click()
+    })
 })
-// '注册失败'
+
+//调用登录的接口
+$('#form_login').submit(function (e) {
+    e.preventDefault()
+    $.ajax({
+        method: 'POST',
+        url: '/api/login',
+        //快速获取表单的数据
+        data: $(this).serialize(),
+        success: function (res) {
+            if (res.status !== 0) {
+                console.log(res);
+                return layer.msg(res.message)
+            }
+            layer.msg('登陆成功')
+            // 登陆成功后会返回一个认证的token值，我们把这个token存到本地存储中
+            localStorage.setItem('token', res.token)
+            console.log(res.token)
+            //登陆成功则跳转至首页
+            location.href = '/index.html'
+        }
+    })
+})
+
