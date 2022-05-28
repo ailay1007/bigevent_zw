@@ -10,4 +10,38 @@
     text-align: center;
     font-size: 12px;
   }
-  
+  .layui-body iframe{
+      width: 100%;
+      height: 100%;
+  }
+  .layui-body {
+      overflow: hidden;
+  }
+  a {
+      transition: none !important;
+  }
+  /* 用户信息样式 */
+  .userinfo {
+      height: 70px;
+      line-height: 70px;
+      text-align: center;
+  }
+  .userinfo img {
+      height: 40px;
+      width: 40px;
+  }  
+  .text-avatar {
+      position: relative;
+
+      top: 4px;
+      display: inline-block;
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+      background-color: #009688;
+      border-radius: 50%;
+      line-height: 40px;
+      text-align: center;
+      color: #fff;
+      font-size: 20px;
+  }
