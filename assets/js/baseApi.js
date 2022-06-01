@@ -13,7 +13,6 @@ $.ajaxPrefilter(function (options) {
 
         //当success或err回调完成后，会调用complete函数
         options.complete = function (res) {
-            console.log(res)
             //res中有一个responseJSON对象，记录了相关信息
             //当身份认证失败后
             if (res.responseJSON.status === 1 && res.responseJSON.message === '身份认证失败！') {
